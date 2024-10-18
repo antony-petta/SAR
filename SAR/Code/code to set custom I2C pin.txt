@@ -1,0 +1,36 @@
+#include <Wire.h>
+
+// Define the I2C address
+#define I2C_ADDRESS 0x10
+
+// Define the GPIO pin for I2C SDA and SCL
+#define SDA_PIN 21
+#define SCL_PIN 22
+
+void setup() {
+  // Start serial communication
+  Serial.begin(115200);
+
+  // Initialize I2C communication
+  Wire.begin(SDA_PIN, SCL_PIN);
+
+  // Register the callback function for receiving I2C data
+  Wire.onReceive(receiveEvent);
+}
+
+void loop() {
+  // Your main loop code here
+}
+
+// Callback function for handling I2C data reception
+void receiveEvent() {
+  while (Wire.available() > 0) {
+    // Read the received byte
+    char receivedByte = Wire.read();
+
+    // Process the received data as needed
+    // For example, print it to Serial monitor
+    Serial.print("Received data: ");
+    Serial.println(receivedByte);
+  }
+}
